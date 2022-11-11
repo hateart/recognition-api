@@ -1,0 +1,29 @@
+version: "3.7"
+
+services:
+
+  nginx:
+    build: ./nginx
+    container_name: nginxrecognition
+    restart: always
+    networks:
+      - internal
+    ports:
+      - "80:9000"
+
+  nodejs:
+    build:
+      context: ./nodejs
+      dockerfile: Dockerfile
+    container_name: nodejsrecognition
+    volumes:
+      - ./nodejs/src:/app/src
+    ports:
+      - "8080:8080"
+    networks:
+      - internal
+
+
+networks:
+  internal:
+      driver: bridge
